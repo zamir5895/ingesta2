@@ -4,7 +4,7 @@ import boto3
 
 # Parámetros de conexión a MySQL
 host = '34.227.210.250'
-port = 8006  # Puerto personalizado
+port = 8005  # Puerto personalizado
 database = 'tienda'
 user = 'root'
 password = 'utec'
