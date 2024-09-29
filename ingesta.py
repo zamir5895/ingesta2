@@ -2,7 +2,8 @@ import mysql.connector
 import csv
 import boto3
 
-# Parámetros de conexión a MySQL
+fichero_csv = None
+
 host = '34.227.210.250'
 port = 8005  # Puerto personalizado
 database = 'tienda'
@@ -42,11 +43,14 @@ finally:
         conexion.close()
         print('Conexión MySQL cerrada')
 
-nombreBucket = "ingest2outputzamir"
-s3 = boto3.client('s3')
+if fichero_csv:
+    nombreBucket = "ingest2outputzamir"
+    s3 = boto3.client('s3')
 
-try:
-    response = s3.upload_file(fichero_csv, nombreBucket, fichero_csv)
-    print(f'Archivo {fichero_csv} subido al bucket {nombreBucket}')
-except Exception as e:
-    print(f'Error al subir el archivo a S3: {e}')
+    try:
+        response = s3.upload_file(fichero_csv, nombreBucket, fichero_csv)
+        print(f'Archivo {fichero_csv} subido al bucket {nombreBucket}')
+    except Exception as e:
+        print(f'Error al subir el archivo a S3: {e}')
+else:
+    print("El archivo CSV no fue generado, no se subirá a S3.")
